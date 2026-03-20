@@ -4,6 +4,7 @@ import { ProjectRepository } from './repositories/project.repository';
 import { TaskRepository } from '../tasks/repositories/task.repository';
 import { TaskStatus } from '../tasks/schemas/task.schema';
 import { NotFoundException } from '@nestjs/common';
+import { describe, beforeEach, it, expect, jest } from '@jest/globals';
 
 describe('ProjectService', () => {
   let service: ProjectService;

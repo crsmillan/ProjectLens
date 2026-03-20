@@ -17,10 +17,16 @@ export class TaskService {
       throw new NotFoundException(`Task with ID ${id} not found`);
     }
 
-    return this.taskRepository.update(id, {
+    const updatedTask = await this.taskRepository.update(id, {
       status: TaskStatus.COMPLETED,
       completedAt: new Date(),
     });
+
+    if (!updatedTask) {
+        throw new NotFoundException(`Task with ID ${id} could not be updated`);
+    }
+
+    return updatedTask;
   }
 
   async findByProject(projectId: string): Promise<Task[]> {
