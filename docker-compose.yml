@@ -1,8 +1,6 @@
-version: '3.8'
-
 services:
   mongodb:
-    image: mongo:latest
+    image: mongo:8.0
     container_name: projectlens-mongodb
     ports:
       - "27017:27017"
