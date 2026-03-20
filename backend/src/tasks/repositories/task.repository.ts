@@ -16,11 +16,11 @@ export class TaskRepository {
     return this.taskModel.find({ projectId }).exec();
   }
 
-  async findById(id: string): Promise<Task> {
+  async findById(id: string): Promise<Task | null> {
     return this.taskModel.findById(id).exec();
   }
 
-  async update(id: string, updateData: any): Promise<Task> {
+  async update(id: string, updateData: any): Promise<Task | null> {
     return this.taskModel.findByIdAndUpdate(id, updateData, { new: true }).exec();
   }
 }
