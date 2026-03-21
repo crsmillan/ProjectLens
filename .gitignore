@@ -24,3 +24,6 @@ yarn-error.log*
 # NestJS specific
 out-tsc/
 *.tsbuildinfo
+
+# Design Assets
+stitch/
