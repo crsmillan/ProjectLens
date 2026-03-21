@@ -49,7 +49,7 @@ La aplicación sigue un lenguaje de diseño **Premium** basado en el ecosistema 
 *   **Elevación**: Uso de sombras ambientales (`shadow-ambient`) y elevaciones dinámicas al interactuar con las tarjetas.
 
 ### Echa un vistazo al workflow:
-![Board Demo](/C:/Users/crsmi/.gemini/antigravity/brain/bcc0b688-882b-418e-9ba6-72edef29fa30/verify_v2_project_detail_and_tasks_1774055476588.webp)
+![Board Demo](examples/demo_board.webp)
 
 ---
 
