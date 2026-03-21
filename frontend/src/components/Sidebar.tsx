@@ -1,12 +1,12 @@
 import React from 'react';
-import { 
-  LayoutDashboard, 
-  FolderOpen, 
-  Users, 
-  BarChart3, 
-  Archive, 
-  Plus, 
-  HelpCircle, 
+import {
+  LayoutDashboard,
+  FolderOpen,
+  Users,
+  BarChart3,
+  Archive,
+  Plus,
+  HelpCircle,
   LogOut,
   Target,
   ChevronLeft,
@@ -29,10 +29,9 @@ const Sidebar = () => {
   ];
 
   return (
-    <aside className={`h-full fixed left-0 top-0 z-50 bg-surface-low flex flex-col p-6 gap-4 font-headline text-sm font-semibold border-r border-outline-variant/10 hidden md:flex transition-all duration-300 ease-in-out ${
-      isSidebarCollapsed ? 'w-20' : 'w-64'
-    }`}>
-      <button 
+    <aside className={`h-full fixed left-0 top-0 z-50 bg-surface-low flex flex-col p-6 gap-4 font-headline text-sm font-semibold border-r border-outline-variant/10 hidden md:flex transition-all duration-300 ease-in-out ${isSidebarCollapsed ? 'w-20' : 'w-64'
+      }`}>
+      <button
         onClick={toggleSidebar}
         className="absolute -right-3 top-20 bg-primary text-white p-1 rounded-full shadow-lg hover:scale-110 transition-transform z-[60]"
       >
@@ -46,7 +45,7 @@ const Sidebar = () => {
         {!isSidebarCollapsed && (
           <div className="animate-in fade-in duration-300">
             <h1 className="text-xl font-black text-on-surface leading-tight font-headline">ProjectLens</h1>
-            <p className="text-[10px] text-outline uppercase tracking-widest font-headline">Editorial PM</p>
+            <p className="text-[10px] text-outline uppercase tracking-widest font-headline">Project Management</p>
           </div>
         )}
       </div>
@@ -58,11 +57,10 @@ const Sidebar = () => {
             <Link
               key={item.label}
               href={item.href}
-              className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 ease-in-out ${
-                isActive 
-                  ? 'text-primary bg-white shadow-sm' 
-                  : 'text-outline hover:text-on-surface hover:bg-white/50'
-              } ${isSidebarCollapsed ? 'justify-center px-2' : ''}`}
+              className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 ease-in-out ${isActive
+                ? 'text-primary bg-white shadow-sm'
+                : 'text-outline hover:text-on-surface hover:bg-white/50'
+                } ${isSidebarCollapsed ? 'justify-center px-2' : ''}`}
               title={isSidebarCollapsed ? item.label : undefined}
             >
               <item.icon size={20} className="shrink-0" />

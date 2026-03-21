@@ -12,10 +12,17 @@ export interface Task {
   completedAt?: string;
 }
 
+export enum ProjectStatus {
+  ACTIVE = 'ACTIVE',
+  ARCHIVED = 'ARCHIVED',
+}
+
 export interface Project {
   _id: string;
   name: string;
   description?: string;
+  status: ProjectStatus;
+  isTeamFocus: boolean;
 }
 
 export interface ProjectMetrics {

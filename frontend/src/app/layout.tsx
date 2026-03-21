@@ -13,8 +13,8 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
-  title: "ProjectLens | Editorial Project Management",
-  description: "Transform complex data into an editorial experience.",
+  title: "ProjectLens | Project Management",
+  description: "Transform complex data into an experience.",
 };
 
 export default function RootLayout({

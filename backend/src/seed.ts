@@ -5,6 +5,8 @@ const mongoUri = 'mongodb://localhost:27017/projectlens';
 const ProjectSchema = new mongoose.Schema({
   name: String,
   description: String,
+  status: { type: String, default: 'ACTIVE' },
+  isTeamFocus: { type: Boolean, default: false },
   createdAt: { type: Date, default: Date.now }
 });
 
@@ -30,16 +32,22 @@ async function seed() {
 
     const projects = [
       { 
-        name: 'Skyline Residence Branding', 
-        description: 'Comprehensive brand identity for the luxury residential complex in downtown. Includes visual system, signage, and digital presence.' 
+        name: 'ProjectLens Core API', 
+        description: 'Main GraphQL and REST infrastructure for the ProjectLens ecosystem. Sprint 04 in progress.',
+        status: 'ACTIVE',
+        isTeamFocus: true
       },
       { 
-        name: "Editor's Lookbook", 
-        description: 'Quarterly digital publication showcasing best-in-class UI patterns and editorial layouts.' 
+        name: 'Mobile App Redesign', 
+        description: 'Transitioning to React Native with a focus on gesture-driven navigation and offline-first data sync.',
+        status: 'ACTIVE',
+        isTeamFocus: false
       },
       { 
-        name: 'Modernist Archive System', 
-        description: 'Digitizing and categorizing structural patterns from 20th-century brutalist architecture.' 
+        name: 'Legacy Auth Provider', 
+        description: 'Maintenance of the old OAuth2 system. Preparing for deprecation in Q3.',
+        status: 'ARCHIVED',
+        isTeamFocus: false
       }
     ];
 

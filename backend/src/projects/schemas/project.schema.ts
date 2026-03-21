@@ -8,6 +8,12 @@ export class Project extends Document {
 
   @Prop()
   description: string;
+
+  @Prop({ default: 'ACTIVE' })
+  status: string;
+
+  @Prop({ default: false })
+  isTeamFocus: boolean;
 }
 
 export const ProjectSchema = SchemaFactory.createForClass(Project);

@@ -30,13 +30,18 @@ const ProjectListRow: React.FC<ProjectListRowProps> = ({ project, metrics }) => 
             {project.name}
           </h3>
           <span className={`px-2 py-0.5 text-[9px] font-black uppercase tracking-widest rounded-md ${
-            isCompleted ? 'bg-secondary/10 text-secondary' : 'bg-surface-high text-outline'
+            project.status === 'ARCHIVED' ? 'bg-outline-variant/20 text-outline' : 'bg-primary/10 text-primary'
           }`}>
-            {isCompleted ? 'Archived' : 'In Curation'}
+            {project.status === 'ARCHIVED' ? 'Archived' : 'Active'}
           </span>
+          {project.isTeamFocus && (
+            <span className="px-2 py-0.5 text-[9px] font-black uppercase tracking-widest rounded-md bg-orange-500/10 text-orange-500">
+              Team Focus
+            </span>
+          )}
         </div>
         <p className="text-outline text-sm line-clamp-1 font-body">
-          {project.description || 'No specialized description provided for this curation.'}
+          {project.description || 'No specialized description provided for this project board.'}
         </p>
       </div>
 

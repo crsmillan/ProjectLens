@@ -5,7 +5,6 @@ import { useProjectStore } from '../store/useProjectStore';
 import Sidebar from '../components/Sidebar';
 import TopNavbar from '../components/TopNavbar';
 import ProjectListRow from '../components/ProjectListRow';
-import FocusBar from '../components/FocusBar';
 import {
   Plus,
   Rocket,
@@ -30,9 +29,8 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-background text-on-surface flex font-body">
       <Sidebar />
-      <main className={`flex-1 relative min-h-screen transition-all duration-300 ease-in-out ${
-        isSidebarCollapsed ? 'md:ml-20' : 'md:ml-64'
-      }`}>
+      <main className={`flex-1 relative min-h-screen transition-all duration-300 ease-in-out ${isSidebarCollapsed ? 'md:ml-20' : 'md:ml-64'
+        }`}>
         <TopNavbar />
 
         <div className="pt-24 px-8 pb-12 max-w-7xl mx-auto">
@@ -46,7 +44,7 @@ export default function Home() {
                 </span>
               </div>
               <h2 className="text-4xl md:text-6xl font-headline font-extrabold text-on-surface tracking-tighter leading-[0.95]">
-                Dashboard <br/>Hub.
+                Dashboard <br />Hub.
               </h2>
             </div>
 
@@ -133,7 +131,7 @@ export default function Home() {
           </div>
         </div>
 
-        <FocusBar />
+
       </main>
     </div>
   );
