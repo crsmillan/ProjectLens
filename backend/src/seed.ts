@@ -44,10 +44,22 @@ async function seed() {
         isTeamFocus: false
       },
       { 
-        name: 'Legacy Auth Provider', 
-        description: 'Maintenance of the old OAuth2 system. Preparing for deprecation in Q3.',
+        name: 'Cloud Migration Prep', 
+        description: 'Historical audit of infrastructure in preparation for the multi-cloud migration strategy.',
         status: 'ARCHIVED',
         isTeamFocus: false
+      },
+      { 
+        name: 'Legacy UI Cleanup', 
+        description: 'Deprecation and cleanup of the jQuery-based dashboard components.',
+        status: 'ARCHIVED',
+        isTeamFocus: false
+      },
+      { 
+        name: 'Security Audit 2026', 
+        description: 'Quarterly pen-testing and vulnerability assessment of the core authentication gateway.',
+        status: 'ACTIVE',
+        isTeamFocus: true
       }
     ];
 
@@ -55,15 +67,48 @@ async function seed() {
       const project = await Project.create(p);
       console.log(`Created project: ${project.name}`);
 
-      const tasks = Array.from({ length: 8 }).map((_, i) => ({
-        name: `${['Research', 'Design', 'Development', 'Review', 'Testing', 'Handoff', 'Marketing', 'Launch'][i]} for ${project.name}`,
-        status: i < 3 ? 'COMPLETED' : (i < 5 ? 'IN_PROGRESS' : 'PENDING'),
-        projectId: project._id,
-        completedAt: i < 3 ? new Date() : null
-      }));
+      // Special case: Legacy UI Cleanup (Archived, no tasks)
+      if (p.name === 'Legacy UI Cleanup') {
+        console.log(`Skipped tasks for ${project.name}`);
+        continue;
+      }
+
+      // Special case: Cloud Migration Prep (Archived, low progress)
+      const isLowProgress = p.name === 'Cloud Migration Prep';
+      const taskCount = isLowProgress ? 12 : 8;
+      
+      const tasks = Array.from({ length: taskCount }).map((_, i) => {
+        let status = 'PENDING';
+        let completedAt: Date | null = null;
+
+        if (isLowProgress) {
+          // Only 1 completed task out of 12
+          if (i === 0) {
+            status = 'COMPLETED';
+            completedAt = new Date();
+          } else if (i < 3) {
+            status = 'IN_PROGRESS';
+          }
+        } else {
+          // Standard mix
+          if (i < 3) {
+            status = 'COMPLETED';
+            completedAt = new Date();
+          } else if (i < 5) {
+            status = 'IN_PROGRESS';
+          }
+        }
+
+        return {
+          name: `${['Research', 'Design', 'Architecture', 'Coding', 'Integration', 'Review', 'Testing', 'QA', 'Staging', 'Security', 'Doc', 'Launch'][i % 12]} for ${project.name}`,
+          status,
+          projectId: project._id,
+          completedAt
+        };
+      });
 
       await Task.insertMany(tasks);
-      console.log(`Added 8 tasks to ${project.name}`);
+      console.log(`Added ${tasks.length} tasks to ${project.name}`);
     }
 
     console.log('\nSeeding complete! 🚀');
