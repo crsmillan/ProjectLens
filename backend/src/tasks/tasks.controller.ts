@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Patch, Param } from '@nestjs/common';
+import { Controller, Post, Body, Patch, Param, Get, Query } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { TaskService } from './tasks.service';
 import { CreateTaskDto } from './dto/task.dto';
@@ -11,6 +11,15 @@ export class TaskController {
   @Post()
   create(@Body() createTaskDto: CreateTaskDto) {
     return this.taskService.create(createTaskDto);
+  }
+
+  @Get()
+  findAll(@Query('projectId') projectId: string) {
+    if (projectId) {
+      return this.taskService.findByProject(projectId);
+    }
+    // Return all tasks if no projectId is provided
+    return []; 
   }
 
   @Patch(':id/complete')

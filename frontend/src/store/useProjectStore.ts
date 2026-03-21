@@ -12,9 +12,10 @@ interface ProjectState {
   isSidebarCollapsed: boolean;
 
   fetchProjects: () => Promise<void>;
+  fetchProjectData: (id: string) => Promise<void>;
   selectProject: (project: Project) => Promise<void>;
   createProject: (name: string, description?: string) => Promise<void>;
-  createTask: (name: string, projectId: string) => Promise<void>;
+  createTask: (projectId: string, name: string) => Promise<void>;
   completeTask: (taskId: string) => Promise<void>;
   toggleSidebar: () => void;
 }
@@ -35,6 +36,25 @@ export const useProjectStore = create<ProjectState>((set, get) => ({
     try {
       const response = await projectService.getAll();
       set({ projects: response.data, loading: false });
+    } catch (err: any) {
+      set({ error: err.message, loading: false });
+    }
+  },
+
+  fetchProjectData: async (id: string) => {
+    set({ loading: true, error: null });
+    try {
+      const [projectRes, tasksRes, metricsRes] = await Promise.all([
+        projectService.getById(id),
+        taskService.getByProject(id),
+        projectService.getMetrics(id),
+      ]);
+      set({ 
+        currentProject: projectRes.data,
+        currentTasks: tasksRes.data, 
+        currentMetrics: metricsRes.data, 
+        loading: false 
+      });
     } catch (err: any) {
       set({ error: err.message, loading: false });
     }
@@ -68,7 +88,7 @@ export const useProjectStore = create<ProjectState>((set, get) => ({
     }
   },
 
-  createTask: async (name: string, projectId: string) => {
+  createTask: async (projectId: string, name: string) => {
     try {
       await taskService.create({ name, projectId });
       // Refresh tasks and metrics
