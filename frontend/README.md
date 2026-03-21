@@ -1,36 +1,70 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ProjectLens: Frontend Agile Edition 🚀
+### Impulsado por Next.js 14 & Estética Premium (Design by Stitch)
 
-## Getting Started
+Bienvenido a la interfaz de **ProjectLens**, una solución de gestión de proyectos diseñada para ofrecer una experiencia de usuario fluida, rápida y visualmente impactante, inspirada en los estándares de **Stitch**.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🏗️ Arquitectura y Tecnologías
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### ¿Por qué Next.js 14?
+Hemos seleccionado Next.js como núcleo del frontend por sus capacidades de vanguardia en rendimiento y escalabilidad:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+*   **Server Components (SSR) vs Client Components (CSR)**: 
+    *   Utilizamos **React Server Components (RSC)** para la captura inicial de datos y la estructura de las páginas, lo que reduce drásticamente el bundle enviado al cliente y optimiza el SEO.
+    *   Implementamos **Client Components** estratégicamente en áreas de alta interactividad, como el tablero de tareas (Backlog), los filtros de estado y los formularios de creación, donde el estado del navegador y los manejadores de eventos son esenciales.
+*   **App Router**: Aprovechamos el sistema de rutas basado en archivos para una navegación instantánea y layouts persistentes (como el Sidebar y TopNavbar).
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Manejo de Estado con Zustand
+Para este challenge, optamos por **Zustand** sobre Context API/Redux por su simplicidad y eficiencia:
+*   **Cero Boilerplate**: Menos código para configurar el almacenamiento global.
+*   **Suscripciones Selectivas**: Los componentes solo se re-renderizan si la porción específica del estado que consumen cambia, garantizando un rendimiento óptimo incluso con listas extensas de tareas.
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## ✨ Funcionalidades Core (Challenge Specs)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Nuestra implementación cubre y supera todos los requisitos del examen técnico:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1.  **Listado de Proyectos**: Vista tipo "Editorial List" con espaciado optimizado y filtrado dinámico por pestañas (*Active, Archived, Team Focus*).
+2.  **Detalle de Proyecto**: Navegación dinámica (`/projects/[id]`) que carga de forma atómica el backlog y las métricas de salud.
+3.  **Gestión de Tareas**: 
+    *   Visualización clara de "Open Issues" vs "Recently Resolved".
+    *   Creación de tareas *inline* (presionando `Enter`) para un flujo de trabajo sin interrupciones.
+    *   Toggle de completado instantáneo con persistencia en backend.
+4.  **Métricas de Progreso**: Barra de salud dinámicas y estadísticas de velocidad integradas en la cabecera.
+5.  **Manejo de Estados**: Implementación de indicadores de carga (Skeletons/Loaders) y manejo de errores 404/500 con retroalimentación visual.
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🎨 Diseño y Estética (Stitch Design System)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+La aplicación sigue un lenguaje de diseño **Premium** basado en el ecosistema **Stitch**:
+
+*   **Tipografía**: Uso exclusivo de **Manrope** (Headline/Body) para una legibilidad moderna y profesional.
+*   **Paleta de Colores**:
+    *   `Primary`: Blue (#0055D2) - Acciones principales y progreso.
+    *   `Surface`: Soft Grays (#F8F9FA) - Fondos limpios para reducir la fatiga visual.
+    *   `Accent`: SpringGreen / Amber - Indicadores de estado suaves.
+*   **Elevación**: Uso de sombras ambientales (`shadow-ambient`) y elevaciones dinámicas al interactuar con las tarjetas.
+
+### Echa un vistazo al workflow:
+![Board Demo](/C:/Users/crsmi/.gemini/antigravity/brain/bcc0b688-882b-418e-9ba6-72edef29fa30/verify_v2_project_detail_and_tasks_1774055476588.webp)
+
+---
+
+## 🛠️ Requisitos Técnicos & Buenas Prácticas
+
+*   **React Hooks**: Uso intensivo de `useState`, `useEffect` y hooks personalizados de Zustand para lógica desacoplada.
+*   **Separación de Componentes**: Estructura modular en `src/components`, manteniendo componentes pequeños, reutilizables y con una única responsabilidad.
+*   **Optimización de Renders**: Uso de memoización implícita en Zustand y estructuras de datos planas para evitar re-procesamientos innecesarios en el DOM.
+
+---
+
+## 🚀 Guía de Inicio Rápido
+
+1. Instala las dependencias: `npm install`
+2. Inicia el servidor de desarrollo: `npm run dev`
+
+---
+*Desarrollado con ❤️ para el proceso de Ubicalo.*
