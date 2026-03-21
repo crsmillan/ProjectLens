@@ -1,21 +1,27 @@
-# ProjectLens: Premium Agile Management 🚀
-### Challenge Técnico - Edición Full Stack
+# 🔭 ProjectLens - Smart Project Management
 
-ProjectLens es una plataforma de gestión de proyectos al estilo Jira, diseñada con una estética premium (**Stitch Design**) y una arquitectura moderna basada en **NestJS** y **Next.js**.
+<p align="center">
+  <img src="https://img.shields.io/badge/Maintained%3F-yes-green.svg" alt="Maintained">
+  <img src="https://img.shields.io/badge/Backend-NestJS-red.svg" alt="Backend">
+  <img src="https://img.shields.io/badge/Frontend-Next.js-black.svg" alt="Frontend">
+  <img src="https://img.shields.io/badge/Database-MongoDB-green.svg" alt="Database">
+  <img src="https://img.shields.io/badge/Architecture-C--S--R-blue.svg" alt="Architecture">
+</p>
 
----
+**ProjectLens** es una solución robusta para la gestión de proyectos y tareas que transforma datos en métricas accionables. Diseñada para ofrecer visibilidad total sobre el avance de los equipos y la eficiencia operativa.
 
-## 🏛️ El Relato Técnico: La Transición a MongoDB
 
-Uno de los pilares de este proyecto fue la implementación de **MongoDB** como motor de persistencia. Esta decisión se tomó para aprovechar la flexibilidad de los esquemas de documentos en un entorno ágil donde los requerimientos de las tareas (*Issues*) pueden evolucionar rápidamente.
 
-### Pruebas de Validación y Migración:
-Para asegurar la integridad del sistema, realizamos una serie de pruebas críticas:
-1.  **Schema Enforcement**: Validamos que Mongoose aplicara correctamente las reglas de negocio (ej. tareas obligatorias asociadas a un proyecto).
-2.  **Integridad de Métricas (Local E2E)**: Ejecutamos pruebas de integración locales (`app-db.e2e-spec.ts`) para verificar que el cálculo de progreso fuera preciso. *Nota: Estos tests se omiten deliberadamente en el pipeline de CI/CD para optimizar la velocidad del despliegue, delegando la validación de base de datos a entornos locales o de staging.*
-3.  **Day Zero Seeding**: Implementamos un servicio de seeding automatizado que garantiza datos frescos para la demo desde el primer arranque.
+## 🎯 Propósito del Proyecto
+Este repositorio contiene la resolución del **Challenge Técnico de Ubicalo**, enfocado en desarrollar una plataforma de gestión de proyectos y tareas moderna, escalable y robusta. 
 
----
+Se han implementado satisfactoriamente los 4 pilares fundamentales solicitados:
+1.  **Backend (NestJS)**: Arquitectura desacoplada (Controller-Service-Repository) y persistencia en MongoDB.
+2.  **Frontend (Next.js 14)**: Interfaz premium, reactiva y optimizada con App Router y Zustand.
+3.  **DevOps & Infra**: Orquestación con Docker y pipeline de CI/CD con GitHub Actions.
+4.  **Narrativa & QA**: Documentación técnica detallada y estrategia de pruebas de calidad.
+
+
 
 ## 🚀 Guía de Inicio Rápido (Docker First)
 
@@ -35,13 +41,43 @@ docker-compose up --build
 *   **Swagger Docs**: [http://localhost:4000/api/docs](http://localhost:4000/api/docs)
 *   **MongoDB**: `localhost:27017`
 
----
 
 ## 🛠️ Stack Tecnológico y Decisiones
 
 *   **Backend**: NestJS siguiendo el patrón **Controller-Service-Repository**. Se utilizó `@nestjs/config` para una gestión de variables de entorno limpia y orientada a contenedores.
 *   **Frontend**: Next.js 14 con **App Router**. Usamos un enfoque híbrido de SSR para la estructura y CSR (Client-Side Rendering) con **Zustand** para la interactividad fluida del tablero de tareas.
 *   **CI/CD**: Contamos con un pipeline en **GitHub Actions** (`.github/workflows/ci-cd.yml`) que automatiza el Linting, los Tests y el Build en cada push.
+
+## 🎨 Arquitectura del Sistema
+### Infografía de Flujo de Datos
+```mermaid
+graph TD
+    subgraph "Frontend (Next.js 14)"
+    A[User Interface] --> B[Zustand State Management]
+    B --> C[API Services / Axios]
+    end
+
+    subgraph "Backend (NestJS)"
+    C --> D[Controllers]
+    D --> E[Services - Business Logic]
+    E --> F[Repositories - Data Access]
+    E --> G[Metrics Engine]
+    end
+
+    subgraph "Database"
+    F --> H[(MongoDB Atlas/Local)]
+    end
+
+    G -- Calculates --> I[Progress %]
+    G -- Calculates --> J[Avg. Completion Time]
+```
+
+
+### Pruebas de Validación y Migración:
+Para asegurar la integridad del sistema, realizamos una serie de pruebas críticas:
+1.  **Schema Enforcement**: Validamos que Mongoose aplicara correctamente las reglas de negocio (ej. tareas obligatorias asociadas a un proyecto).
+2.  **Integridad de Métricas (Local E2E)**: Ejecutamos pruebas de integración locales (`app-db.e2e-spec.ts`) para verificar que el cálculo de progreso fuera preciso. *Nota: Estos tests se omiten deliberadamente en el pipeline de CI/CD para optimizar la velocidad del despliegue, delegando la validación de base de datos a entornos locales o de staging.*
+3.  **Day Zero Seeding**: Implementamos un servicio de seeding automatizado que garantiza datos frescos para la demo desde el primer arranque.
 
 ---
 
@@ -50,6 +86,8 @@ docker-compose up --build
 *   **Tests E2E (Base de Datos)**: Se cuenta con un set de pruebas de integración para validar la conectividad y métricas en MongoDB (validados localmente). Se omiten del CI/CD principal por criterios de velocidad de despliegue.
 
 Si deseas ejecutar los tests fuera de Docker:
+
+
 
 1.  **Backend**:
     ```bash
@@ -63,8 +101,6 @@ Si deseas ejecutar los tests fuera de Docker:
     npm install
     npm run build
     ```
-
----
 
 ## 🌐 Estrategia de Despliegue y Ciclo de Vida
 
@@ -89,3 +125,7 @@ Implementamos una separación estricta mediante variables de entorno:
 
 ---
 *Desarrollado como parte del proceso técnico para Ubicalo.*
+
+
+
+
