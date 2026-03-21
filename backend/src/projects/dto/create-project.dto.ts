@@ -7,7 +7,10 @@ export class CreateProjectDto {
   @IsNotEmpty()
   name: string;
 
-  @ApiProperty({ description: 'The description of the project', required: false })
+  @ApiProperty({
+    description: 'The description of the project',
+    required: false,
+  })
   @IsString()
   @IsOptional()
   description?: string;

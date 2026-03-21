@@ -5,7 +5,9 @@ import { Project } from '../schemas/project.schema';
 
 @Injectable()
 export class ProjectRepository {
-  constructor(@InjectModel(Project.name) private projectModel: Model<Project>) {}
+  constructor(
+    @InjectModel(Project.name) private projectModel: Model<Project>,
+  ) {}
 
   async create(projectData: any): Promise<Project> {
     const newProject = new this.projectModel(projectData);

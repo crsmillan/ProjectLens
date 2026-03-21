@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access */
 import mongoose from 'mongoose';
 
 const mongoUri = 'mongodb://localhost:27017/projectlens';
@@ -7,14 +8,18 @@ const ProjectSchema = new mongoose.Schema({
   description: String,
   status: { type: String, default: 'ACTIVE' },
   isTeamFocus: { type: Boolean, default: false },
-  createdAt: { type: Date, default: Date.now }
+  createdAt: { type: Date, default: Date.now },
 });
 
 const TaskSchema = new mongoose.Schema({
   name: String,
-  status: { type: String, enum: ['PENDING', 'COMPLETED', 'IN_PROGRESS'], default: 'PENDING' },
+  status: {
+    type: String,
+    enum: ['PENDING', 'COMPLETED', 'IN_PROGRESS'],
+    default: 'PENDING',
+  },
   projectId: mongoose.Schema.Types.ObjectId,
-  completedAt: Date
+  completedAt: Date,
 });
 
 const Project = mongoose.model('Project', ProjectSchema);
@@ -30,41 +35,46 @@ async function seed() {
     await Task.deleteMany({});
     console.log('Cleared existing data');
 
-    const projects = [
-      { 
-        name: 'ProjectLens Core API', 
-        description: 'Main GraphQL and REST infrastructure for the ProjectLens ecosystem. Sprint 04 in progress.',
+    const projects: any[] = [
+      {
+        name: 'ProjectLens Core API',
+        description:
+          'Main GraphQL and REST infrastructure for the ProjectLens ecosystem. Sprint 04 in progress.',
         status: 'ACTIVE',
-        isTeamFocus: true
+        isTeamFocus: true,
       },
-      { 
-        name: 'Mobile App Redesign', 
-        description: 'Transitioning to React Native with a focus on gesture-driven navigation and offline-first data sync.',
+      {
+        name: 'Mobile App Redesign',
+        description:
+          'Transitioning to React Native with a focus on gesture-driven navigation and offline-first data sync.',
         status: 'ACTIVE',
-        isTeamFocus: false
+        isTeamFocus: false,
       },
-      { 
-        name: 'Cloud Migration Prep', 
-        description: 'Historical audit of infrastructure in preparation for the multi-cloud migration strategy.',
+      {
+        name: 'Cloud Migration Prep',
+        description:
+          'Historical audit of infrastructure in preparation for the multi-cloud migration strategy.',
         status: 'ARCHIVED',
-        isTeamFocus: false
+        isTeamFocus: false,
       },
-      { 
-        name: 'Legacy UI Cleanup', 
-        description: 'Deprecation and cleanup of the jQuery-based dashboard components.',
+      {
+        name: 'Legacy UI Cleanup',
+        description:
+          'Deprecation and cleanup of the jQuery-based dashboard components.',
         status: 'ARCHIVED',
-        isTeamFocus: false
+        isTeamFocus: false,
       },
-      { 
-        name: 'Security Audit 2026', 
-        description: 'Quarterly pen-testing and vulnerability assessment of the core authentication gateway.',
+      {
+        name: 'Security Audit 2026',
+        description:
+          'Quarterly pen-testing and vulnerability assessment of the core authentication gateway.',
         status: 'ACTIVE',
-        isTeamFocus: true
-      }
+        isTeamFocus: true,
+      },
     ];
 
     for (const p of projects) {
-      const project = await Project.create(p);
+      const project: any = await Project.create(p);
       console.log(`Created project: ${project.name}`);
 
       // Special case: Legacy UI Cleanup (Archived, no tasks)
@@ -76,8 +86,8 @@ async function seed() {
       // Special case: Cloud Migration Prep (Archived, low progress)
       const isLowProgress = p.name === 'Cloud Migration Prep';
       const taskCount = isLowProgress ? 12 : 8;
-      
-      const tasks = Array.from({ length: taskCount }).map((_, i) => {
+
+      const tasks: any[] = Array.from({ length: taskCount }).map((_, i) => {
         let status = 'PENDING';
         let completedAt: Date | null = null;
 
@@ -103,7 +113,7 @@ async function seed() {
           name: `${['Research', 'Design', 'Architecture', 'Coding', 'Integration', 'Review', 'Testing', 'QA', 'Staging', 'Security', 'Doc', 'Launch'][i % 12]} for ${project.name}`,
           status,
           projectId: project._id,
-          completedAt
+          completedAt,
         };
       });
 
@@ -120,4 +130,10 @@ async function seed() {
   }
 }
 
-seed();
+void (async () => {
+  try {
+    await seed();
+  } catch {
+    process.exit(1);
+  }
+})();
