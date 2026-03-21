@@ -1,13 +1,66 @@
 services:
+  # MongoDB Database Service
+  # We use the official Mongo 8.0 image for state-of-the-art performance
   mongodb:
     image: mongo:8.0
     container_name: projectlens-mongodb
     ports:
-      - "27017:27017"
+      - "27017:27017" # Exposed for local debugging tools (Compass, etc.)
     volumes:
-      - mongodb_data:/data/db
+      - mongodb_data:/data/db # Persistence for our projects and tasks
     environment:
-      MONGO_INITDB_DATABASE: projectlens
+      MONGO_INITDB_DATABASE: projectlens # Default database created on start
 
+  # Backend API Service (NestJS)
+  # Built from the documented multi-stage Dockerfile in the /backend directory
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: projectlens-backend
+    ports:
+      - "4000:4000"
+    environment:
+      - MONGODB_URI=mongodb://mongodb:27017/projectlens
+    depends_on:
+      - mongodb # Ensure database is up before starting the API
+
+  # Ephemeral Seed Service
+  # Runs once at startup to populate the database and then exits.
+  # Note: To skip seeding, you can comment out this service.
+  seed:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: projectlens-seed
+    environment:
+      - MONGODB_URI=mongodb://mongodb:27017/projectlens
+    command: npx ts-node src/seed.ts
+    depends_on:
+      - mongodb
+
+  # Frontend Application (Next.js)
+  # Built from the ./frontend directory, optimized for production
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        # Build-time argument for NEXT_PUBLIC variables
+        # Note: We use localhost:4000 because this is a 'use client' app.
+        # The browser (outside Docker) must reach the API via the exposed port on localhost.
+        - NEXT_PUBLIC_API_URL=http://localhost:4000
+    container_name: projectlens-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      # Client-side: Browser needs to reach the API at localhost:4000
+      - NEXT_PUBLIC_API_URL=http://localhost:4000
+      # Server-side (Optional): If using SSR fetching inside Docker, use http://backend:4000
+      - INTERNAL_API_URL=http://backend:4000
+    depends_on:
+      - backend # Ensure the API is ready for SSR and client calls
+
+# Named volume for database persistence across container restarts
 volumes:
   mongodb_data:
