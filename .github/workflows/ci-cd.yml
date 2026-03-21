@@ -2,8 +2,6 @@ name: ProjectLens CI/CD
 
 # Trigger the workflow on push or pull request to the main branch
 on:
-  push:
-    branches: [ main, feat/* ]
   pull_request:
     branches: [ main ]
 
