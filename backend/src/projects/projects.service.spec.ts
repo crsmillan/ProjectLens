@@ -1,9 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-argument */
 import { Test, TestingModule } from '@nestjs/testing';
 import { ProjectService } from './projects.service';
 import { ProjectRepository } from './repositories/project.repository';
 import { TaskRepository } from '../tasks/repositories/task.repository';
 import { TaskStatus } from '../tasks/schemas/task.schema';
-import { NotFoundException } from '@nestjs/common';
 import { describe, beforeEach, it, expect, jest } from '@jest/globals';
 
 describe('ProjectService', () => {

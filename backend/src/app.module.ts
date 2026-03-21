@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ProjectsModule } from './projects/projects.module';
@@ -7,7 +8,18 @@ import { TasksModule } from './tasks/tasks.module';
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://localhost:27017/projectlens'),
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+    MongooseModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: (configService: ConfigService) => ({
+        uri:
+          configService.get<string>('MONGODB_URI') ||
+          'mongodb://localhost:27017/projectlens',
+      }),
+      inject: [ConfigService],
+    }),
     ProjectsModule,
     TasksModule,
   ],

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, UpdateQuery } from 'mongoose';
 import { Task } from '../schemas/task.schema';
 
 @Injectable()
@@ -20,7 +20,12 @@ export class TaskRepository {
     return this.taskModel.findById(id).exec();
   }
 
-  async update(id: string, updateData: any): Promise<Task | null> {
-    return this.taskModel.findByIdAndUpdate(id, updateData, { new: true }).exec();
+  async update(
+    id: string,
+    updateData: UpdateQuery<Task>,
+  ): Promise<Task | null> {
+    return this.taskModel
+      .findByIdAndUpdate(id, updateData, { new: true })
+      .exec();
   }
 }

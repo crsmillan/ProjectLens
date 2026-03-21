@@ -8,11 +8,13 @@ async function bootstrap() {
 
   app.enableCors(); // Enable CORS for development
 
-  app.useGlobalPipes(new ValidationPipe({
-    whitelist: true,
-    forbidNonWhitelisted: true,
-    transform: true,
-  }));
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      transform: true,
+    }),
+  );
 
   const config = new DocumentBuilder()
     .setTitle('ProjectLens API')
@@ -26,4 +28,7 @@ async function bootstrap() {
 
   await app.listen(process.env.PORT ?? 4000);
 }
-bootstrap();
+void bootstrap().catch((err) => {
+  console.error('Error starting application:', err);
+  process.exit(1);
+});

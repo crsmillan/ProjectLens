@@ -23,7 +23,7 @@ export class TaskService {
     });
 
     if (!updatedTask) {
-        throw new NotFoundException(`Task with ID ${id} could not be updated`);
+      throw new NotFoundException(`Task with ID ${id} could not be updated`);
     }
 
     return updatedTask;

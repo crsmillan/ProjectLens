@@ -42,7 +42,9 @@ export class ProjectService {
       };
     }
 
-    const completedTasks = tasks.filter((t) => t.status === TaskStatus.COMPLETED);
+    const completedTasks = tasks.filter(
+      (t) => t.status === TaskStatus.COMPLETED,
+    );
     const totalTasksCount = tasks.length;
     const completedTasksCount = completedTasks.length;
 

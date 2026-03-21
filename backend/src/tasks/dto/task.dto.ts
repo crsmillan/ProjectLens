@@ -1,4 +1,10 @@
-import { IsString, IsNotEmpty, IsOptional, IsEnum, IsMongoId } from 'class-validator';
+import {
+  IsString,
+  IsNotEmpty,
+  IsOptional,
+  IsEnum,
+  IsMongoId,
+} from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { TaskStatus } from '../schemas/task.schema';
 
@@ -8,7 +14,11 @@ export class CreateTaskDto {
   @IsNotEmpty()
   name: string;
 
-  @ApiProperty({ enum: TaskStatus, required: false, default: TaskStatus.PENDING })
+  @ApiProperty({
+    enum: TaskStatus,
+    required: false,
+    default: TaskStatus.PENDING,
+  })
   @IsEnum(TaskStatus)
   @IsOptional()
   status?: TaskStatus;

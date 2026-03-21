@@ -1,5 +1,5 @@
 import { Controller, Get, Post, Body, Param } from '@nestjs/common';
-import { ApiTags, ApiOperation } from '@nestjs/swagger';
+import { ApiTags } from '@nestjs/swagger';
 import { ProjectService } from './projects.service';
 import { CreateProjectDto } from './dto/create-project.dto';
 
