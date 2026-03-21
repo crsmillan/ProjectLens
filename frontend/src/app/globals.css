@@ -1,26 +1,58 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f7f9fb;
+  --on-background: #191c1e;
+  --surface: #f7f9fb;
+  --on-surface: #191c1e;
+  --surface-container-lowest: #ffffff;
+  --surface-container-low: #f2f4f6;
+  --surface-container-high: #e6e8ea;
+  --surface-container-highest: #e0e3e5;
+  --primary: #0058be;
+  --primary-container: #2170e4;
+  --secondary: #495e8a;
+  --secondary-container: #b6ccff;
+  --tertiary: #924700;
+  --outline: #727785;
+  --outline-variant: #c2c6d6;
+  --error: #ba1a1a;
 }
 
 @theme inline {
   --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --color-on-background: var(--on-background);
+  --color-surface: var(--surface);
+  --color-on-surface: var(--on-surface);
+  --color-surface-lowest: var(--surface-container-lowest);
+  --color-surface-low: var(--surface-container-low);
+  --color-surface-high: var(--surface-container-high);
+  --color-surface-highest: var(--surface-container-highest);
+  --color-primary: var(--primary);
+  --color-primary-container: var(--primary-container);
+  --color-secondary: var(--secondary);
+  --color-secondary-container: var(--secondary-container);
+  --color-tertiary: var(--tertiary);
+  --color-outline: var(--outline);
+  --color-outline-variant: var(--outline-variant);
+  --color-error: var(--error);
+  
+  --shadow-ambient: 0px 12px 32px rgba(25, 28, 30, 0.04);
+  --radius-card: 1.5rem;
+  --radius-pill: 9999px;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  /* Proper Tailwind v4 Font definitions */
+  --font-headline: var(--font-manrope);
+  --font-body: var(--font-inter);
 }
 
 body {
   background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  color: var(--on-surface);
+  @apply antialiased font-body;
+}
+
+h1, h2, h3, h4, h5, h6, .font-headline {
+  font-family: var(--font-manrope), sans-serif !important;
+  @apply tracking-tight;
 }

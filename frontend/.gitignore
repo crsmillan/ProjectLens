@@ -36,6 +36,10 @@ yarn-error.log*
 # vercel
 .vercel
 
-# typescript
+# NestJS specific
+out-tsc/
 *.tsbuildinfo
+
+# Design Assets
+stitch/
 next-env.d.ts

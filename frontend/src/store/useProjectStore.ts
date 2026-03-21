@@ -9,12 +9,14 @@ interface ProjectState {
   currentTasks: Task[];
   loading: boolean;
   error: string | null;
+  isSidebarCollapsed: boolean;
 
   fetchProjects: () => Promise<void>;
   selectProject: (project: Project) => Promise<void>;
   createProject: (name: string, description?: string) => Promise<void>;
   createTask: (name: string, projectId: string) => Promise<void>;
   completeTask: (taskId: string) => Promise<void>;
+  toggleSidebar: () => void;
 }
 
 export const useProjectStore = create<ProjectState>((set, get) => ({
@@ -24,6 +26,9 @@ export const useProjectStore = create<ProjectState>((set, get) => ({
   currentTasks: [],
   loading: false,
   error: null,
+  isSidebarCollapsed: false,
+
+  toggleSidebar: () => set((state) => ({ isSidebarCollapsed: !state.isSidebarCollapsed })),
 
   fetchProjects: async () => {
     set({ loading: true, error: null });
