@@ -65,4 +65,27 @@ Si deseas ejecutar los tests fuera de Docker:
     ```
 
 ---
+
+## 🌐 Estrategia de Despliegue y Ciclo de Vida
+
+Para llevar **ProjectLens** a un entorno de producción real, planteamos la siguiente arquitectura de despliegue:
+
+### 1. Despliegue de Aplicaciones Web
+*   **Contenerización Uniforme**: Utilizaríamos exactamente el **mismo contenedor Docker** desarrollado localmente tanto en **Railway** como en **Vercel** (vía soporte de Docker). Esto garantiza el principio de "funciona en mi máquina, funciona en la nube".
+*   **Escalabilidad**: El backend se escala horizontalmente según la demanda, mientras que el frontend aprovecha el Edge Runtime de Vercel/Railway.
+
+### 2. Despliegue Móvil (Implementacion con React Native)
+*   **Integración**: La plataforma permite la integración nativa con **React Native** para extender la gestión de tareas a dispositivos iOS y Android.
+*   **Builds & Stores**: El pipeline automatizado generaría los binarios (**APK** para Android y **Builds** para iOS) y los envía directamente a sus respectivas tiendas (Google Play y App Store) tras pasar las validaciones de UI automáticas.
+
+### 3. Manejo de Ambientes y Seguridad
+Implementamos una separación estricta mediante variables de entorno:
+*   **Desarrollo y Staging**: Configurados mediante archivos **.env** locales y de nube manejados por el equipo de desarrollo.
+*   **Producción**: Este ambiente está **totalmente aislado del alcance del desarrollador**. Las llaves y secretos de producción son inyectados únicamente por el servidor de CI/CD o el administrador de infraestructura, garantizando la seguridad de la data real.
+
+### 4. Rollback y Aseguramiento de Calidad (QA)
+*   **Ambiente de QA Obligatorio**: Antes de llegar a Producción, cualquier cambio debe ser aprobado en un ambiente de **QA (Quality Assurance)**. Ningún despliegue a Prod se libera sin el "visto bueno" de QA para evitar errores críticos.
+*   **Estrategia de Rollback**: En caso de un incidente imprevisto, utilizamos las herramientas nativas de **Vercel o Railway** para realizar un "Instant Rollback" a la versión estable anterior en segundos, minimizando el impacto al usuario final.
+
+---
 *Desarrollado como parte del proceso técnico para Ubicalo.*
